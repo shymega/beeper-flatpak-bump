@@ -1,0 +1,31 @@
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      timezone: "Europe/London"
+      time: "08:00"
+    commit-message:
+      prefix: "chore(ci-deps)"
+    reviewers:
+      - "@shymega"
+    groups:
+      gh-actions-deps:
+        patterns:
+          - "*"
+      
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      timezone: "Europe/London"
+      time: "08:00"
+    commit-message:
+      prefix: "chore(go-deps)"
+    reviewers:
+      - "@shymega"
+    groups:
+      go-deps:
+        patterns:
+          - "*"
