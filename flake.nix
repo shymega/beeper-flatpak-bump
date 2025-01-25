@@ -22,8 +22,8 @@
         inherit (self.packages.${final.system}) beeper-flatpak-bump-ver;
       });
 
-      packages = forEachSupportedSystem ({ pkgs }: with pkgs; rec {
-        default = beeper-flatpak-bump-ver;
+      packages = forEachSupportedSystem ({ pkgs }: with pkgs; {
+        default = self.packages.${pkgs.system}.beeper-flatpak-bump-ver;
         beeper-flatpak-bump-ver = callPackage ./build-aux/nix { };
       });
 
@@ -36,6 +36,7 @@
 
       devShells = forEachSupportedSystem ({ pkgs }: with pkgs; {
         default = mkShell {
+          inputsFrom = [ self.packages.${system}.beeper-flatpak-bump-ver ];
           packages = [
             # go (version is specified by overlay)
             go
@@ -45,8 +46,7 @@
 
             # https://github.com/golangci/golangci-lint
             golangci-lint
-          ] ++ self.packages.${pkgs.system}.default.buildInputs
-            ++ self.packages.${pkgs.system}.default.nativeBuildInputs;
+          ];
         };
       });
     };
